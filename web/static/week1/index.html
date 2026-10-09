@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ร้านตัวอย่าง — บทเรียน HTML สัปดาห์ที่ 1</title>
+  </head>
+  <body>
+    <header>
+      <h1>ร้านตัวอย่าง</h1>
+      <nav aria-label="เมนูหลัก">
+        <a href="#catalog">สินค้า</a>
+        <a href="#cart">ตะกร้าตัวอย่าง</a>
+      </nav>
+    </header>
+
+    <main>
+      <section aria-labelledby="welcome-title">
+        <h2 id="welcome-title">เลือกของใช้สำหรับการเรียน</h2>
+        <p>หน้านี้เป็นตัวอย่าง HTML แบบคงที่ ยังไม่มี CSS, JavaScript หรือ API</p>
+      </section>
+
+      <section id="catalog" aria-labelledby="catalog-title">
+        <h2 id="catalog-title">รายการสินค้า</h2>
+        <article aria-labelledby="notebook-title">
+          <h3 id="notebook-title">สมุดบันทึก</h3>
+          <p>ปกอ่อน จำนวน 120 หน้า</p>
+          <p>ราคา <data value="129">129 บาท</data></p>
+          <button type="button" disabled>เพิ่มลงตะกร้า — จะทำงานในบทเรียนภายหลัง</button>
+        </article>
+      </section>
+
+      <section id="cart" aria-labelledby="cart-title">
+        <h2 id="cart-title">ตะกร้าตัวอย่าง</h2>
+        <p>ยังไม่มีสินค้าในตะกร้า</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>ตัวอย่างสำหรับฝึกอ่านโครงสร้างเอกสารและ DOM</p>
+    </footer>
+  </body>
+</html>

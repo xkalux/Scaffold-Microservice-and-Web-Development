@@ -1,0 +1,32 @@
+{
+  "name": "course-web-development",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "typecheck": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check": "bun run lint && bun run typecheck && bun run build"
+  },
+  "dependencies": {
+    "@sveltejs/adapter-auto": "8.0.0",
+    "@sveltejs/kit": "3.0.1",
+    "svelte": "5.57.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/bun": "1.4.2",
+    "eslint": "10.12.0",
+    "eslint-plugin-svelte": "3.23.0",
+    "svelte-check": "4.7.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.2",
+    "typescript-eslint": "8.71.1",
+    "vite": "8.3.3"
+  }
+}
