@@ -1,7 +1,8 @@
 # Shared testing standard
 
-**Owner:** Instructor  
-**Status:** Active policy for Microservices and Web; see [handoff.md](handoff.md) for executed checks and limitations.
+**Owner:** Instructor
+
+**Status:** Active policy for both courses. Record current task results in [handoff.md](handoff.md) with links to evidence; retained starter evidence is linked in [toolchain.md](toolchain.md).
 
 Both courses use this standard while keeping source, tests, fixtures and package commands inside their own package. Read [../AGENTS.md](../AGENTS.md) for ownership and [toolchain.md](toolchain.md) before changing dependencies.
 
@@ -23,11 +24,11 @@ Tests assert observable outcomes rather than private implementation details. Cov
 
 Use the existing Bun test runner from `microservices/`. Keep tests and temporary databases service-owned. Boundary tests should exercise validation, authentication, authorization and ownership before writes, as applicable to the changed behavior.
 
-For a focused Red/Green cycle, run the relevant test file with `bun run test <test-file>`. The final package gate is `bun run check`, which runs lint, type checking and tests. Record the actual commands with resolved paths and results for the task.
+For a focused Red/Green cycle, run the actual relevant test path with Bun. For example, the existing starter test runs with `bun test test/health.test.ts`; it is baseline evidence, not Red for a future business rule. The final package gate is `bun run check`, which runs lint, type checking and tests. Record the actual commands with resolved paths and results for the task.
 
 ## Web checks and Playwright E2E
 
-Test business rules with focused unit/integration tests before implementing them. Pure TypeScript rules can use Bun's built-in test runner with an explicit file path, for example `bun test src/lib/<rule>.test.ts`. Choose a component-aware runner only when needed and follow the dependency policy first. Run Bun unit tests separately from Playwright specs.
+Test business rules with focused unit/integration tests before implementing them. Pure TypeScript rules can use Bun's built-in test runner: run `bun test` with the actual rule test path after creating that test. Do not run an invented placeholder path or mix the browser specs into the Bun unit suite. Choose a component-aware runner only when needed and follow the dependency policy first. Run Bun unit tests separately from Playwright specs.
 
 Every new or changed browser journey must also have Playwright coverage written before the behavior change. Cover its success path and relevant visible errors, validation or denied actions. Use real browser interactions and assert rendered outcomes; an HTTP check alone is insufficient. Baseline tests for an unchanged starter page are characterization evidence, not proof of a business logic Red/Green cycle.
 
@@ -44,11 +45,22 @@ Run these commands from `web/` with Bun 1.4.2:
 ```sh
 bun install --frozen-lockfile
 bun run test:e2e:install
-bun run test:e2e
 bun run check
 ```
 
-The browser install command installs Chromium for the pinned Playwright version; required operating-system libraries must also be available. `test:e2e` builds the application and runs Playwright against its local production preview. `check` runs lint, type checking and `test`, which currently invokes this build/E2E gate. Run any added business unit/integration tests as well; the starter currently has no separate business unit suite.
+The browser install command installs Chromium for the pinned Playwright version; required operating-system libraries must also be available. During iteration, use `bun run test:e2e` for a focused browser cycle. For final verification, run `check` once; it already includes that gate, so do not add another unchanged E2E run after a successful `check`. `test:e2e` builds the application and runs Playwright against its local production preview. `check` runs lint, type checking and `test`, which currently invokes this build/E2E gate. Run any added business unit/integration tests as well; the starter currently has no separate business unit suite.
+
+### Browser setup failure
+
+If Chromium reports missing system libraries on a supported Linux host, run the local pinned CLI from `web/` to install OS dependencies:
+
+```sh
+bunx --no-install playwright install-deps chromium
+```
+
+This may require system-administrator privileges; follow the host's permitted installation method. On a restricted host, record the missing libraries and stop the affected browser gate until an approved environment is available. Do not silently switch Playwright versions. See [Playwright browser setup](https://playwright.dev/docs/browsers) for supported hosts and dependencies.
+
+### Ports and evidence
 
 Playwright uses `http://127.0.0.1:4173`, separate from Svelte/Vite's development port `5173`. The preview command uses `--strictPort`: an occupied E2E port fails instead of switching to another port. Keep the preview command, readiness pattern and browser `baseURL` aligned when changing the E2E port.
 

@@ -1,44 +1,64 @@
-# Toolchain and version record
+# Toolchain and pinned versions
 
-**Checked against public release/package metadata:** 2026-10-07  
-**Bun install and dependency-resolution test:** Bun 1.4.2 installed each package from its own frozen lockfile after removing generated dependencies on 2026-10-07.  
-**Stable status:** Pins below match the latest stable releases checked on this date except where a documented compatibility constraint requires an older compatible TypeScript line. Command results and the Svelte CLI DNS blocker are recorded in `docs/handoff.md`.
+**Owner:** Instructor
 
-## Selected pins
+**Manifest/configuration review:** 2026-10-09
 
-| Tool/package | Pin | Latest stable checked | Source / note |
-|---|---:|---:|---|
-| Bun | 1.4.2 | 1.4.2 | [Bun](https://bun.com/); [Bun 1.4 release notes](https://bun.com/blog/bun-v1.4) |
-| Elysia | 1.4.30 | 1.4.30 | [Elysia releases](https://github.com/elysiajs/elysia/releases); the 2.x line is prerelease |
-| Drizzle ORM | 0.45.3 | 0.45.3 | [Drizzle ORM releases](https://github.com/drizzle-team/drizzle-orm/releases); 1.0 remains RC |
-| Drizzle Kit | 0.31.11 | 0.31.11 | [npm package versions](https://www.npmjs.com/package/drizzle-kit?activeTab=versions); 1.0 remains RC |
-| TypeScript | 6.0.2 (both packages) | 7.0.2 | [TypeScript 6 release notes](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-6-0.html); 7.0.2 is the newest stable line, but SvelteKit 3 declares the 6.x line as its TypeScript peer range |
-| ESLint | 10.12.0 | 10.12.0 | [ESLint release notes](https://eslint.org/blog/2026/10/eslint-v10.12.0-released/) |
-| `@eslint/js` | 10.0.1 | 10.0.1 | Package version is independent of ESLint's; verified from the npm registry with Bun on 2026-10-07 |
-| typescript-eslint | 8.71.1 | 8.71.1 | [typescript-eslint releases](https://github.com/typescript-eslint/typescript-eslint/releases) |
-| SvelteKit | 3.0.1 | 3.0.1 | [SvelteKit releases](https://github.com/sveltejs/kit/releases); released 2026-10-06 |
-| Svelte | 5.57.2 | 5.57.2 | [Svelte package](https://www.npmjs.com/package/svelte) |
-| Vite | 8.3.3 | 8.3.3 | [Vite package](https://www.npmjs.com/package/vite); SvelteKit 3 requires at least 8.0.12 |
-| `@sveltejs/vite-plugin-svelte` | 7.3.1 | 7.3.1 | [Svelte Vite plugin](https://www.npmjs.com/package/@sveltejs/vite-plugin-svelte) |
-| `@sveltejs/adapter-auto` | 8.0.0 | 8.0.0 | [Svelte adapter releases](https://github.com/sveltejs/kit/releases) |
-| Tailwind CSS | 4.3.3 | 4.3.3 | [Tailwind v4.3 release](https://tailwindcss.com/blog/tailwindcss-v4-3) |
-| `@tailwindcss/vite` | 4.3.3 | 4.3.3 | [Tailwind Vite package](https://www.npmjs.com/package/@tailwindcss/vite) |
-| `eslint-plugin-svelte` | 3.23.0 | 3.23.0 | [Svelte ESLint plugin](https://www.npmjs.com/package/eslint-plugin-svelte) |
-| `@types/bun` | 1.4.2 | 1.4.2 | [Bun types package](https://www.npmjs.com/package/@types/bun) |
-| `svelte-check` | 4.7.6 | 4.7.6 | [svelte-check package](https://www.npmjs.com/package/svelte-check) |
-| `@playwright/test` (Web only) | 1.64.0 | 1.64.0 (checked 2026-10-09) | [Package metadata](https://registry.npmjs.org/@playwright/test/1.64.0); clean frozen install and 3 Chromium E2E tests passed with portable Linux libraries; see `docs/handoff.md` |
-| Svelte documentation/autofixer CLI | `@sveltejs/mcp` 0.1.26 via `bunx` | 0.1.26 | [Svelte AI tools releases](https://github.com/sveltejs/ai-tools/releases); the exact commands resolve the package but its docs/autofixer request is blocked by runtime DNS to `svelte.dev` (see handoff) |
+**Official compatibility documentation review:** 2026-10-09
 
-## Compatibility notes
+**Runtime tests during this documentation change:** Not run; manifests, lockfiles and source are unchanged.
 
-- SvelteKit 3 removes `svelte.config.js`; configuration belongs in `vite.config.ts` through `sveltekit()`. Its current migration guide requires Node 22.17+, TypeScript 6, Svelte 5.57.1+, Vite 8.0.12+, and `@sveltejs/vite-plugin-svelte` 7+. The package uses Bun 1.4.2 as the requested runtime/package manager; its install, typecheck, lint, and production build are tested in the handoff record.
-- SvelteKit 3 replaces the generated `$lib` alias with `#lib` configured through package imports. Avoid `$lib` in new code.
-- Each course has its own Bun-generated `bun.lock`; do not hand-author or combine lockfiles.
-- `typescript@7.0.2` is latest stable as of the check date, but the scaffold pins `6.0.2` because SvelteKit 3's published peer range is `^6.0.0`. Keep the shared TypeScript major aligned across the two packages during the term.
-- Fresh frozen-lockfile installs passed with `bun install --frozen-lockfile` in each package. Microservices `bun run check` passed (lint, typecheck, 1 test); Drizzle generation/migration/seed passed on a fresh temporary database. Web `bun run check` passed (lint, Svelte check with 0 errors and 0 warnings, production build). See `docs/handoff.md` for complete commands and the separate AI-skill tool limitation.
+**Latest-stable comparison:** Not reverified in this documentation change. The table records repository pins, not a claim that every pin is the latest release.
 
-## Update policy
+## Prerequisites
 
-The instructor requested Playwright E2E setup for Web on 2026-10-09. Add only exact `@playwright/test@1.64.0` to Web, preserving existing dependency pins and using its Bun-generated lockfile. The package declares Node >=20; this environment has Node 24.12.0. Use Bun 1.4.2 for package commands and install the matching Chromium build with the local Playwright CLI. See [testing.md](testing.md) for the workflow and [handoff.md](handoff.md) for actual results. This authorization does not change Microservices dependencies.
+Use **Bun 1.4.2** as the only package manager. Each course has its own `package.json` and `bun.lock`; there is no root package or workspace. Install from the relevant course folder with `bun install --frozen-lockfile`. A failure is a setup blocker, not permission to regenerate the lock.
 
-Keep stable versions pinned for a teaching term. Before changing one, compare the current release with this record, review official breaking changes/security notes, test the clean install and all relevant checks, then update both the package manifest/lockfile and this document in an instructor-reviewed change.
+The [SvelteKit 3 migration guide](https://svelte.dev/docs/kit/migrating-to-sveltekit-3) specifies Node.js **22.17+**, TypeScript 6, Svelte 5.57.1+, Vite 8.0.12+, and the Svelte Vite plugin 7+. The manifests below meet those version minima. They do not declare an `engines` field; the Node prerequisite is documented rather than enforced by that field.
+
+Bun is the package manager, while [bunx](https://bun.com/docs/pm/bunx) can honor a tool's Node shebang. Keep a compatible Node installation available for the Web toolchain. `bunx --bun` forces Bun for the external Svelte helper workflow. Playwright additionally requires browser binaries matching its installed version and operating-system libraries; see [testing](testing.md).
+
+## Manifest pins
+
+| Package | Microservices | Web |
+|---|---|---|
+| `@eslint/js` | 10.0.1 | 10.0.1 |
+| `@playwright/test` | — | 1.64.0 |
+| `@sveltejs/adapter-auto` | — | 8.0.0 |
+| `@sveltejs/kit` | — | 3.0.1 |
+| `@sveltejs/vite-plugin-svelte` | — | 7.3.1 |
+| `@tailwindcss/vite` | — | 4.3.3 |
+| `@types/bun` | 1.4.2 | 1.4.2 |
+| `drizzle-kit` | 0.31.11 | — |
+| `drizzle-orm` | 0.45.3 | — |
+| `elysia` | 1.4.30 | — |
+| `eslint` | 10.12.0 | 10.12.0 |
+| `eslint-plugin-svelte` | — | 3.23.0 |
+| `svelte` | — | 5.57.2 |
+| `svelte-check` | — | 4.7.6 |
+| `tailwindcss` | — | 4.3.3 |
+| `typescript` | 6.0.2 | 6.0.2 |
+| `typescript-eslint` | 8.71.1 | 8.71.1 |
+| `vite` | — | 8.3.3 |
+
+Both manifests declare `packageManager: bun@1.4.2`. Exact transitive resolutions belong to each package's checked-in lockfile; do not hand-edit or combine lockfiles.
+
+The external documentation/autofixer helper uses `@sveltejs/mcp@0.1.26` via Bun. It is not a course dependency and is not in either Bun lockfile. [AI skills](ai-skills.md) describes its scope and unexecuted workflow status. [skills-lock.json](../skills-lock.json) records copied skill sources and hashes separately.
+
+## Configuration facts
+
+SvelteKit is configured with `sveltekit({ adapter: adapter() })` in [web/vite.config.ts](../web/vite.config.ts), alongside the Tailwind Vite plugin. Do not add legacy `svelte.config.js` guidance. The current Web manifest has no `imports` alias: use relative imports. An authorized `#lib` alias needs an explicit package-imports entry and verification.
+
+Microservices uses `drizzle-orm/bun-sqlite` with `bun:sqlite`. Both packages use ESLint flat configuration. The Web `check` script includes lint, type checking, production build and Playwright; added business rule tests must also run separately as described in [testing](testing.md).
+
+## Retained execution evidence
+
+[The Web starter result](../verification/runs/2026-10-09-web-e2e-setup/result.json) records a 2026-10-09 Web check with three passing Chromium tests, plus setup failures and limitations. It applies to the files and host recorded there; it does not prove a new checkout, skill discovery, Microservices, or external lesson examples passed. Its temporary paths are evidence, not reusable setup instructions.
+
+## Version changes
+
+Keep the term's pins stable. An instructor-authorized dependency or tool update must record the affected package, previous/proposed version, release-check date, official release/security sources, stable status, breaking changes and compatibility rationale. Compare against latest stable at that time; do not silently replace a pin with a prerelease.
+
+Test a clean frozen install and relevant lint/type/unit/integration/build/E2E gates in the target environment. Record the separate test date, exact commands, actual results and evidence. Update the manifest, Bun-generated lockfile and this record together only after the required review; do not present an untested change as approved.
+
+Release sources: [Bun](https://github.com/oven-sh/bun/releases), [Elysia](https://github.com/elysiajs/elysia/releases), [Drizzle](https://github.com/drizzle-team/drizzle-orm/releases), [TypeScript](https://github.com/microsoft/TypeScript/releases), [ESLint](https://github.com/eslint/eslint/releases), [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint/releases), [SvelteKit/adapters](https://github.com/sveltejs/kit/releases), [Svelte](https://github.com/sveltejs/svelte/releases), [Vite](https://github.com/vitejs/vite/releases), [Svelte Vite plugin](https://github.com/sveltejs/vite-plugin-svelte/releases), [Tailwind](https://github.com/tailwindlabs/tailwindcss/releases), [Svelte ESLint](https://github.com/sveltejs/eslint-plugin-svelte/releases), [Svelte language tools](https://github.com/sveltejs/language-tools/releases), [Playwright](https://github.com/microsoft/playwright/releases), [Svelte AI tools](https://github.com/sveltejs/ai-tools/releases). Check published package metadata for the exact package as well; repository release tags need not match every package's version.

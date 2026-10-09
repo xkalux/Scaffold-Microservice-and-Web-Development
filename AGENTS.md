@@ -8,24 +8,24 @@ Student lessons are maintained in the project-level Drive `Contents/`, outside t
 
 ## Start here
 
-Read `docs/index.md` first. Treat it as the entry point and active-document catalog, then open only the documents needed for the task. For resumed work, follow the session-handoff rule above. Use `docs/codemap.md` to choose paths, owners and checks. Keep shared developer documentation in English. Student-facing weekly lessons are in Thai under `Contents/` in the portable ZIP layout or `../Contents/` in the original Drive layout.
+Read `docs/index.md` first. Treat it as the entry point and active-document catalog, then open only the documents needed for the task. For resumed work, follow the session-handoff rule above. Use `docs/codemap.md` to choose paths, owners and checks. Keep shared developer documentation in English. Student-facing weekly lessons are in Thai and maintained separately in the project-level Drive `Contents/`.
 
 ## Documentation organization
 
-- Keep shared project guidance in `docs/` and course-specific guidance in `docs/microservices/` or `docs/web/`, following the ownership and purpose listed in `docs/index.md` and `docs/codemap.md`. Keep student lessons in the course `Contents/` location for the active layout; do not duplicate them in `docs/`.
+- Keep shared project guidance in `docs/` and course-specific guidance in `docs/microservices/` or `docs/web/`, following the ownership and purpose listed in `docs/index.md` and `docs/codemap.md`. Keep student lessons outside this repository; do not duplicate them in `docs/`.
 - Put each active topic in its canonical document and link to it instead of maintaining duplicate instructions. When adding, moving or renaming active documentation, update `docs/index.md` and `docs/codemap.md` when their catalog, ownership or path/check information changes.
-- Keep `docs/archive/` for detailed records of completed Change Requests and superseded research or decisions. Keep active contracts, setup guidance and unresolved issues in the active documentation. Treat archived material as historical reference, not current policy.
+- Keep `docs/archive/` for concise records of completed Change Requests using the numbering policy in `docs/archive/README.md`. Keep active contracts, setup guidance and unresolved issues in the active documentation. Treat archived material as historical reference, not current policy.
 - Track cross-scope requests in `docs/change-requests/index.md`. Keep active request details, scope, acceptance criteria, dependencies and latest verification available. On completion, keep the index entry concise and move detailed discussion to `docs/archive/`, preserving the request ID and links in both directions.
 
 ## Course ownership and scope
 
 - This single root `AGENTS.md` and the relevant shared documents in `docs/` provide common project guidance for both courses. Shared guidance does not merge package ownership or authorize changes to the other course's source.
 - A Microservices feature or bug task may change source only in `microservices/`; a Web task may change source only in `web/`. Do not edit the other package or make incidental cross-package changes.
-- Read shared documents as needed. Edit course-owned docs only when relevant to the requested feature; edit instructor-owned shared docs only when specifically in scope and authorized by their owner. If completing a task depends on a change in the other package, describe that dependency and leave the other package unchanged unless the user requests a cross-course task.
+- Read shared documents as needed. Edit course-owned docs only when relevant to the requested feature; edit instructor-owned shared docs only when specifically in scope and authorized by their owner. Task agents may update the current `docs/handoff.md` checkpoint and record their cross-scope request in `docs/change-requests/index.md` as part of their authorized task; this does not authorize changing shared policy or the other course. If completing a task depends on a change in the other package, describe that dependency and leave the other package unchanged unless the user requests a cross-course task.
 - `docs/contracts/` is owned by Microservices for the current API contract. Web may review it and maintain consumer notes in `docs/web/`; Web requests contract changes through a Change Request and must not edit the contract directly.
 - `docs/microservices/` is owned by Microservices; `docs/web/` is owned by Web.
-- `docs/index.md`, `docs/codemap.md`, `docs/toolchain.md`, `docs/ai-skills.md`, `docs/testing.md`, `docs/handoff.md`, `docs/change-requests/index.md`, `docs/archive/` policy, and shared verification handoffs are instructor-owned.
-- There is one root `AGENTS.md`; do not add nested `AGENTS.md` files. Respect the ownership table even when a requested task spans both courses; report cross-scope work for separate handling.
+- `docs/index.md`, `docs/codemap.md`, `docs/toolchain.md`, `docs/ai-skills.md`, `docs/testing.md`, `docs/handoff.md`, `docs/change-requests/index.md`, `docs/archive/` policy, `docs/agent-prompts.md`, and shared verification evidence are instructor-owned.
+- There is one root `AGENTS.md`; do not add nested `AGENTS.md` files. If the user explicitly authorizes both course scopes, work in separately scoped steps and verify each affected package. Otherwise, report a cross-course dependency without editing the other package.
 
 ## Package manager and version policy
 
@@ -39,7 +39,7 @@ Read `docs/index.md` first. Treat it as the entry point and active-document cata
 - Both packages use ESLint flat config. After the test-first cycle below, run scoped lint, type checks and relevant tests. Web changes also require a successful build and Playwright E2E checks for affected browser flows. Follow `docs/testing.md` for commands and completion gates.
 - Microservices uses Elysia TypeBox `t` schemas at API input/output boundaries and Drizzle ORM with `drizzle-orm/bun-sqlite` over Bun's `bun:sqlite` driver. Each service owns its schema, migrations, database file, and seed data.
 - Authentication context is request-scoped and created with Elysia `derive()`. `derive()` runs before route validation: never treat `body`, `query`, or `params` as validated there. Validate route inputs first, then enforce authentication, role, and ownership checks before any handler with side effects. Do not trust user IDs or roles supplied by a client.
-- Web uses SvelteKit and Tailwind CSS. Follow Svelte 5 runes and current SvelteKit guidance; the SvelteKit 3 setup configures the framework through the Vite plugin and uses `#lib` if an app-library alias is needed.
+- Web uses SvelteKit and Tailwind CSS. Follow Svelte 5 runes and current SvelteKit guidance; the SvelteKit 3 setup configures the framework through the Vite plugin. The current package has no library alias configured; use relative imports. Configure `#lib` through package imports only in an authorized change and verify it.
 - Web consumes the accepted API contract or an explicit mock/fixture. It never imports Microservices database code or edits that package.
 
 ## Business logic: tests before implementation
@@ -52,7 +52,7 @@ Read `docs/index.md` first. Treat it as the entry point and active-document cata
 
 ## Official AI skills and documentation
 
-Read `docs/ai-skills.md` for official sources, applicability, and current verification status. Load the official framework skills for applicable work from the single `.agents/skills/` location or the supported Codex plugin. A URL in a document is not proof that a skill was installed or used. For Svelte components, run the official documentation lookup/autofixer workflow before finalizing when the skill is available. Report honestly if it cannot be loaded or run.
+Read `docs/ai-skills.md` for official sources, applicability, and current verification status. Load the official framework skills for applicable work from the single `.agents/skills/` location or the supported Codex plugin. A URL in a document is not proof that a skill was installed or used. For work on `.svelte`, `.svelte.ts`, or `.svelte.js` files, follow the required Svelte skill workflow: consult official documentation when syntax is uncertain and run the autofixer before finalizing. Documentation-only work does not require this framework workflow. Report honestly if it cannot be loaded or run.
 
 ## Review and reporting
 

@@ -1,38 +1,26 @@
-# Code map
+# Codemap
 
-## Portable verification paths (instructor-owned)
+Use this map to select the smallest relevant scope. Run package commands from the course directory, never from the repository root.
 
-| Path | Purpose / check |
-|---|---|
-| `HOW-TO-CODEX-VSCODE.md` | Thai step-by-step user guide |
-| `docs/handoff.md`, `docs/verification-prompts.md` | Current checkpoint and vendor-independent prompts |
-| `scripts/verify_structure.py` | Python-only structural checks, not approval |
-| `scripts/run_checks.py` | Real scoped baseline with immutable logs; exact Bun pin and frozen independent installs |
-| `scripts/extract_examples.py` | Per-example/Action case inventory, never blind execution |
-| `scripts/check_completion.py` | Fail-closed evidence-index check |
-| `verification/` | Course map, checklist, case ledger, original hashes, Drive IDs and evidence |
-| `course-sources/` | Read-only copies of the three authoritative course documents |
-| `Contents/` or `../Contents/` | Thai student lessons, course-owned; portable ZIP or original Drive layout |
-| `.verification-work/` | Only tool-owned isolated fixtures/database/install directories; not durable evidence |
-
-| Path | Responsibility | Owner | Entry point / checks |
+| Path | Owner | Role | Review / checks |
 |---|---|---|---|
-| web/static/week1/ | Static semantic HTML used to introduce browser and DOM basics | Web | bun run dev, then open /week1/index.html |
-| `AGENTS.md` | Instructions shared by both packages; course ownership boundaries | Instructor | Read before work |
-| `.gitignore` | Shared local secrets, databases and generated outputs | Instructor | Review with `git check-ignore -v` |
-| `.agents/skills/` | Official project-local agent skills | Instructor | Check `docs/ai-skills.md` |
-| `docs/testing.md` | Shared test-first policy and review gates for both packages | Instructor | Read before business logic changes or code review |
-| `microservices/src/index.ts` | Bun server entry point | Microservices | `cd microservices && bun run dev` |
-| `microservices/src/app.ts` | Elysia application and route registration | Microservices | `bun run lint`, `bun run typecheck`, `bun run test` |
-| `microservices/src/db/` | Drizzle schema, SQLite adapter, migrations, seed | Microservices | `bun run db:generate`, `bun run db:migrate`, `bun run db:seed` |
-| `microservices/drizzle.config.ts` | Drizzle Kit schema/migration configuration | Microservices | `bun run db:generate` |
-| `web/vite.config.ts` | SvelteKit 3 and Tailwind Vite plugins | Web | `bun run dev`, `bun run check` |
-| `web/.gitignore` | Web-local env files, builds, coverage, Playwright output/auth | Web | Review with `git check-ignore -v` |
-| `web/src/routes/` | SvelteKit pages and layouts | Web | `bun run check`; test changed journeys first per `docs/testing.md` |
-| `web/src/lib/` | Web-owned components and API client | Web | Test changed business rules first; keep API client aligned to accepted contract |
-| `web/playwright.config.ts`, `web/e2e/` | Browser E2E configuration and isolated Web journeys | Web | `bun run test:e2e:install`, `bun run test:e2e`; see `docs/testing.md` |
-| `docs/contracts/` | Accepted OpenAPI/API contract and fixtures | Microservices (contract); Web (consumer review) | Web uses mock until status is accepted |
-| `docs/microservices/` | Service boundaries, data ownership, security, testing | Microservices | Read only for relevant service task |
-| `docs/web/` | Routes, components, state, API integration, UX, testing | Web | Read only for relevant Web task |
-| `docs/change-requests/` | Current cross-scope requests | Instructor | Link completed details to archive |
-| `docs/archive/` | Closed decisions and superseded details | Instructor | Reference only |
+| `AGENTS.md`, `README.md`, shared `docs/` | Instructor | Common policy, setup and continuation | Consistency, links, commands against manifests/config |
+| `docs/microservices/` | Microservices | Service-specific development notes | Match service code and accepted contract |
+| `docs/web/` | Web | Consumer and browser notes | Match Web code, fixtures and accepted contract |
+| `docs/contracts/` | Microservices | API contract; Web requests changes | Schema, errors, authorization and consumer fixtures |
+| `docs/change-requests/`, `docs/archive/` | Instructor | Cross-scope requests and completed decisions | IDs, status, acceptance and reciprocal links |
+| `.agents/skills/`, `skills-lock.json` | Instructor | Shared official skill copies and source/hash record | [AI skill workflow](ai-skills.md); no automatic upgrades |
+| `microservices/package.json`, `microservices/bun.lock` | Microservices; pin changes require instructor review | Independent package | Frozen install and package check after authorized changes |
+| `microservices/src/app.ts`, `microservices/src/index.ts` | Microservices | Routes and server startup | Boundary/regression tests; `bun run check` |
+| `microservices/src/db/`, `microservices/drizzle/`, `microservices/drizzle.config.ts` | Microservices | Schema, SQLite client, seed and migrations | Isolated database checks and relevant tests |
+| `microservices/test/` | Microservices | Bun tests | Behavioral Red/Green or characterization as appropriate |
+| `web/package.json`, `web/bun.lock` | Web; pin changes require instructor review | Independent package | Frozen install and package check after authorized changes |
+| `web/src/routes/`, `web/src/lib/`, `web/src/app.css`, `web/src/app.html` | Web | Pages, modules, layout and styles | Applicable Svelte skills, rule tests and `bun run check` |
+| `web/static/` | Web | Static beginner exercises and assets | Relevant browser behavior and scope review |
+| `web/vite.config.ts`, `web/tsconfig.json`, `web/eslint.config.mjs` | Web | SvelteKit, Tailwind, type/lint configuration | Typecheck, lint, production build and affected E2E |
+| `web/playwright.config.ts`, `web/e2e/` | Web | Browser configuration and journey tests | Focused E2E, then package check |
+| `verification/runs/` | Instructor/shared evidence | Retained actual execution evidence | Read the relevant result, command log and limitations |
+
+Generated dependencies, build output, browser reports and SQLite data are not source templates. Preserve task evidence before a new run overwrites generated reports. See [testing](testing.md) for gates and [toolchain](toolchain.md) for version policy.
+
+Web may consume only an accepted contract or an explicit Web-owned mock/fixture. It must not import Microservices database code. If a task explicitly authorizes both scopes, keep the changes and verification separable.

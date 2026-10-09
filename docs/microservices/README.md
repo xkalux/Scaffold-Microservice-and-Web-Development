@@ -1,8 +1,15 @@
-# Microservices documentation
+# Microservices development notes
 
-**Owner:** Microservices Architecture Development  
-Use this folder for service boundaries, data ownership, API implementation, authentication/authorization, resilience, database strategy, and test strategy.
+**Owner:** Microservices
 
-The API contract lives in `../contracts/` and is owned by Microservices. Keep service databases and Drizzle migrations separate. Do not put Web application instructions here.
+Source, tests, schema, migrations, SQLite files and seed data belong in `microservices/`. Run commands from that directory. The starter implements only `GET /health`; the sample product table and seed do not expose a product API.
 
-Follow the shared [testing standard](../testing.md): write and run a failing test before implementing changed business rules or bug fixes. Keep tests and isolated database fixtures in `microservices/`; finish with the scoped `bun run check` gate.
+Use Elysia TypeBox `t` for route boundaries and Drizzle's Bun SQLite driver. Follow [AGENTS.md](../../AGENTS.md) for request-scoped authentication, validation and authorization order. Keep each future service's data and migrations service-owned.
+
+- Setup and startup: [root README](../../README.md).
+- Checks and Red/Green rules: [testing](../testing.md); the final package gate is `bun run check`.
+- Framework workflow: [AI skills](../ai-skills.md).
+- Accepted interfaces and fixtures: [contracts](../contracts/index.md).
+- Dependency changes: [toolchain](../toolchain.md).
+
+Add service-specific decisions here only when needed. Publish API deliveries in English. Do not edit Web source to complete a service task.

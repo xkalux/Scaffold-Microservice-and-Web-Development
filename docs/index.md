@@ -1,20 +1,26 @@
-# Documentation index
+# Documentation entry point
 
-Read this index first. If resuming work from another AI or session, read [handoff.md](handoff.md) for the concise checkpoint. Then open only the active document needed for the current task; archived records are reference-only. The handoff is a context-transfer note, not a source of technical requirements or test evidence.
+Read [AGENTS.md](../AGENTS.md), this index, and the latest user task. For resumed work, read [handoff.md](handoff.md), verify the checkout, then load only documents relevant to the task. An archive or checkpoint does not override current policy.
 
-| Document | Owner | Status | When to read |
-|---|---|---|---|
-| [codemap.md](codemap.md) | Instructor | Active | Before choosing files or running checks |
-| [toolchain.md](toolchain.md) | Instructor | Active; Web starter checks recorded 2026-10-09, earlier package checks dated 2026-10-07 | Before installing packages or changing versions |
-| [ai-skills.md](ai-skills.md) | Instructor | Active; project skills present, local discovery/workflow NOT_RUN | Before AI-assisted framework work |
-| [testing.md](testing.md) | Instructor | Active policy | Before business logic changes, Web E2E work or code review |
-| [handoff.md](handoff.md) | Instructor | Active | When resuming work or recording a blocker |
-| [contracts/](contracts/) | Microservices | Contract not yet frozen | Before connecting Web to a service |
-| [microservices/](microservices/) | Microservices | Active | For service implementation and database work |
-| [web/](web/) | Web | Active | For SvelteKit pages, state, API integration, and UX |
-| [change-requests/index.md](change-requests/index.md) | Instructor | Active | Before requesting a cross-scope or contract change |
-| [archive/README.md](archive/README.md) | Instructor | Active policy | Before archiving completed decisions or Change Requests |
+## Active documents
 
-## Ownership
+| Document | Owner | Purpose / when to read |
+|---|---|---|
+| [Starter README](../README.md) | Instructor | First install and course startup |
+| [Codemap](codemap.md) | Instructor | Select paths, ownership and checks |
+| [Toolchain](toolchain.md) | Instructor | Pinned versions, prerequisites and update policy |
+| [Testing](testing.md) | Instructor | Test-first rules, package gates and browser setup |
+| [AI skills](ai-skills.md) | Instructor | Load applicable skills and verify actual use |
+| [Handoff](handoff.md) | Instructor; task agents may update checkpoint | Resume with minimal context |
+| [Agent prompts](agent-prompts.md) | Instructor | Copyable start, resume and checkpoint prompts |
+| [API contracts](contracts/index.md) | Microservices | Accepted interfaces; Web reviews and requests changes |
+| [Microservices notes](microservices/README.md) | Microservices | Service-owned guidance |
+| [Web notes](web/README.md) | Web | Consumer and browser guidance |
+| [Change Requests](change-requests/index.md) | Instructor; task agents may record requests | Active cross-scope requests and completed record links |
+| [Archive policy](archive/README.md) | Instructor | Completed request numbering and storage |
 
-Both course scopes use these shared docs as common project guidance, while the packages remain separate working scopes with separate manifests and Bun lockfiles. Shared docs do not authorize either course to edit the other's source. Microservices owns current API contracts; Web records consumer feedback and requests changes through a Change Request.
+## Keep context small
+
+Keep each active rule in its canonical document and link to it. Course notes contain only course-specific additions. The handoff holds one current checkpoint, with paths to detailed evidence. Load an archive record only when its decision is relevant.
+
+Weekly student lessons remain outside this repository in the project-level Drive `Contents/`. This starter has no lesson verification scripts or case ledger. Package checks validate code in their stated scope; they do not approve external lesson content.
