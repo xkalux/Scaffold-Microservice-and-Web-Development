@@ -1,8 +1,15 @@
-# Web documentation
+# Web development notes
 
-**Owner:** Web Development  
-Use this folder for SvelteKit routes, components, client state, API integration, accessibility/UX, and Web tests.
+**Owner:** Web
 
-Use an accepted contract from `../contracts/` or an explicit mock/fixture. Report API feedback through a Change Request. Do not document or change Microservices internals here.
+Pages, components, API clients, mocks, fixtures, static exercises and browser tests belong in `web/`. Run commands from that directory. The starter uses sample catalog/cart state; it is not connected to a service.
 
-Follow the shared [testing standard](../testing.md): write and run failing tests before implementing changed business rules, and add Playwright E2E coverage before changing browser journeys. Keep configuration, specs and fixtures in `web/`; use `bun run check` for the Web lint/typecheck/build/E2E gate and run relevant business unit tests separately.
+Use Svelte 5 runes, the SvelteKit Vite configuration and Tailwind CSS. The current manifest has no library alias configured; use relative imports. Keep API assumptions beside Web-owned mocks until a contract is accepted.
+
+- Setup and startup: [root README](../../README.md).
+- Business rule tests, browser checks and OS setup: [testing](../testing.md). The final `bun run check` includes build/E2E; run added rule-level tests separately.
+- Required Svelte skill workflow: [AI skills](../ai-skills.md).
+- Accepted API and cross-course delivery rules: [contracts](../contracts/index.md).
+- Dependency changes: [toolchain](../toolchain.md).
+
+Record consumer feedback and course-specific decisions here in English. Request contract changes through [Change Requests](../change-requests/index.md); do not edit Microservices source or its contract.

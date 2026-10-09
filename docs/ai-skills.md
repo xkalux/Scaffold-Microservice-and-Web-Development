@@ -1,42 +1,46 @@
-# Official AI skills and practices
+# Official AI skill workflow
 
-## Local Web testing update (2026-10-09, Asia/Bangkok)
+**Owner:** Instructor
 
-This repository now contains the project-local Elysia and Svelte skills under `.agents/skills/` (66 files), copied from the Drive verification scaffold. Their source revisions and copied-content hashes are recorded in `skills-lock.json`. This corrects the earlier file-not-found state. Actual skill discovery in the target Codex/VS Code or Cloud environment and the Svelte documentation/autofixer workflow remain NOT_RUN; file presence alone does not prove discovery or use. The Web testing task changed the Playwright harness and documentation, with no Svelte component/module edits. Type checks, a build and starter E2E tests are recorded in [handoff.md](handoff.md); they do not prove the skill workflow ran.
+**Documentation reviewed:** 2026-10-09
 
-## Hosted continuation record (2026-10-09, Asia/Bangkok)
+**Runtime status:** Skill files are present. Discovery and tool execution must be verified in the agent/environment used for a task; this documentation refresh did not execute them.
 
-The dated 2026-10-07 records below are historical scaffold evidence. Current lesson runtime and local agent-discovery checks are NOT_RUN in this hosted continuation because Bun is unavailable. The bundle retains the existing skill files and `skills-lock.json` without reinstalling or upgrading them. Codex project discovery uses `.agents/skills/`; verify actual loading in the local extension and record the paths read. Other agents must load the applicable skills explicitly if their discovery differs.
+## Load only applicable skills
 
-`scripts/run_checks.py --skills` uses `bun x --bun @sveltejs/mcp@0.1.26` with argv rather than shell interpolation. It collects docs/autofixer output for starter components only, keeps diagnostic review pending, and does not claim those checks validate all lesson examples. Read findings, address them, rerun affected checks and record per-lesson evidence. A URL, copied folder or CLI zero exit status is insufficient by itself.
+| Work | Project-local skill | Official source |
+|---|---|---|
+| Elysia source/design | [elysiajs](../.agents/skills/elysiajs/SKILL.md) | [elysiajs/skills](https://github.com/elysiajs/skills) |
+| Create, edit or analyze `.svelte`, `.svelte.ts`, `.svelte.js` | [svelte-code-writer](../.agents/skills/svelte-code-writer/SKILL.md) | [Svelte AI skills](https://svelte.dev/docs/ai/skills) |
+| Svelte architecture and implementation | [svelte-core-bestpractices](../.agents/skills/svelte-core-bestpractices/SKILL.md) | [sveltejs/ai-tools](https://github.com/sveltejs/ai-tools) |
 
-**Reviewed:** 2026-10-07  
-**Checked:** 2026-10-07 with `skills` CLI 1.7.1 and Bun 1.4.2. `bunx skills list --agent codex --json` reports all three skills as project-scope Codex skills under `.agents/skills/`. This hosted Work session read the installed `SKILL.md` files directly. The target VS Code/Codex CLI should run the list command after opening the scaffold root to confirm its local discovery.
+Read the actual applicable `SKILL.md` and relevant referenced guidance. A link or installed directory does not prove discovery or use. If automatic project discovery is unavailable, explicitly load the applicable skill from its path using the agent's file-reading capability. Record the paths read and tools used; do not claim automatic discovery from manual loading.
 
-## Microservices
+[skills-lock.json](../skills-lock.json) records source paths and copied-content hashes, not upstream commit SHAs. Keep upstream names and attribution files. Do not reinstall or update skills silently; an authorized update must record the resolved upstream revision and regenerate the lock through the appropriate installer.
 
-- Elysia official best practices: <https://elysiajs.com/essential/best-practice>
-- Elysia lifecycle and `derive()`: <https://elysiajs.com/essential/life-cycle>
-- Elysia TypeBox `t`: <https://elysiajs.com/patterns/typebox>
-- Official Elysia AI skills: <https://elysiajs.com/table-of-content.html#ai-skills-for-llms>
-- Installed from the official source with `bunx skills add elysiajs/skills --agent codex --copy --yes`; the installer reported `./.agents/skills/elysiajs`. The upstream `main` HEAD checked on 2026-10-07 was `8fd8031b83bce42e903ed0e38e6170213876c20e`. The skill was read; its instruction to consult `elysiajs.com/llms.txt` was followed. 
-- Drizzle + Bun SQLite: <https://orm.drizzle.team/docs/sqlite/connect-bun-sqlite>
-- Bun SQLite: <https://bun.com/docs/runtime/sqlite>
+## Svelte documentation and autofixer
 
-## Web
+For applicable Svelte work, consult documentation when syntax is uncertain and run the autofixer before finalizing. Read its issues and suggestions, fix relevant findings and repeat; a zero exit code alone is insufficient. Package checks remain required. Documentation-only work does not invoke this framework workflow.
 
-- Svelte best practices: <https://svelte.dev/docs/svelte/best-practices>
-- Svelte AI skills: <https://svelte.dev/docs/ai/skills>
-- Required official skills: `svelte-code-writer` and `svelte-core-bestpractices`.
-- Installed from `sveltejs/ai-tools` with the Bun skills CLI, targeting Codex's project-local `.agents/skills/`; `bunx skills list --agent codex --json` reports both names as installed for Codex. Upstream `main` HEAD checked on 2026-10-07: `6b5d0dab3c9c083387247ab20dc684573481076b`; `skills-lock.json` records the content hashes of the copied files. The official release tags checked the same day were `svelte-code-writer-v2026.10.03-125549` and `svelte-core-bestpractices-v2026.10.03-125548` at commit `1a3ba88bba598c6734533c48e23cb5d37424b618`. Both installed `SKILL.md` files were read in this session.
-- The `svelte-code-writer` workflow requires documentation lookup when syntax is uncertain and `svelte-autofixer` before finalizing Svelte component/module work. Upstream `npx` examples were converted to the pinned `bunx @sveltejs/mcp@0.1.26` commands. The `list-sections` and `svelte-autofixer` commands were attempted with Bun 1.4.2, but both failed when the runtime could not resolve `svelte.dev` (`EAI_AGAIN`); do not mark the skill workflow passed until this blocker is resolved.
-- Tailwind with SvelteKit: <https://tailwindcss.com/docs/installation/framework-guides/sveltekit>
-- ESLint Svelte plugin: <https://sveltejs.github.io/eslint-plugin-svelte/user-guide/>
+The helper pin is `@sveltejs/mcp@0.1.26`; it is an external CLI, not a course dependency. Run these Bun equivalents from `web/`. The documentation example uses the official section path; choose actual relevant paths returned by the catalog.
 
-## Verification record
+```sh
+bunx --bun @sveltejs/mcp@0.1.26 list-sections
+bunx --bun @sveltejs/mcp@0.1.26 get-documentation 'svelte/$state'
+bunx --bun @sveltejs/mcp@0.1.26 svelte-autofixer ./src/routes/+page.svelte --svelte-version 5
+```
 
-| Skill/tool | Source | Revision | Install path | Agent discovery | Command/check result |
-|---|---|---|---|---|---|
-| Elysia official skill | Elysia docs / `elysiajs/skills` | `8fd8031` (main HEAD checked 2026-10-07) | `.agents/skills/elysiajs` | `bunx skills list --agent codex --json`: listed for Codex; `SKILL.md` read | Consulted `https://elysiajs.com/llms.txt`; package checks pass |
-| `svelte-code-writer` | Svelte AI docs / `sveltejs/ai-tools` | `main` HEAD `6b5d0da` checked 2026-10-07; file hash in `skills-lock.json` | `.agents/skills/svelte-code-writer` | `bunx skills list --agent codex --json`: listed for Codex; `SKILL.md` read | `bunx @sveltejs/mcp@0.1.26 list-sections` and `svelte-autofixer` attempted; both blocked by runtime DNS `EAI_AGAIN svelte.dev` |
-| `svelte-core-bestpractices` | Svelte AI docs / `sveltejs/ai-tools` | `main` HEAD `6b5d0da` checked 2026-10-07; file hash in `skills-lock.json` | `.agents/skills/svelte-core-bestpractices` | `bunx skills list --agent codex --json`: listed for Codex; `SKILL.md` read | Guidance applied; workflow status remains pending the Svelte CLI/autofixer network check |
+Single quotes preserve rune names in a POSIX shell. Prefer a file path over interpolating inline code. Follow the installed skill for other Svelte module types and verify the helper supports the input being checked; an unsupported file is not a successful analysis.
+
+These commands were checked against [official CLI syntax](https://svelte.dev/docs/ai/cli) and the installed skill, but were **not executed in this documentation refresh**. Run them in the target environment and record actual diagnostics. If a required tool, supported input, or network access is unavailable, checkpoint the blocker in [handoff](handoff.md) and stop only the affected work; do not claim the workflow passed.
+
+## Official technical references
+
+- [Elysia best practices](https://elysiajs.com/essential/best-practice) and [lifecycle](https://elysiajs.com/essential/life-cycle): `derive()` precedes validation; authorization runs after validation and before side effects.
+- [Elysia TypeBox](https://elysiajs.com/patterns/typebox)
+- [Drizzle with Bun SQLite](https://orm.drizzle.team/docs/sqlite/connect-bun-sqlite)
+- [Bun SQLite](https://bun.com/docs/runtime/sqlite)
+- [Tailwind with SvelteKit](https://tailwindcss.com/docs/installation/framework-guides/sveltekit)
+- [Svelte ESLint plugin](https://sveltejs.github.io/eslint-plugin-svelte/user-guide/)
+
+When behavior is uncertain, check official docs for the pinned version and current release notes. Preserve pins throughout the term unless the instructor authorizes a change; see [toolchain](toolchain.md).
