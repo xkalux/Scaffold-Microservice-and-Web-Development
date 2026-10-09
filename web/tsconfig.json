@@ -12,6 +12,6 @@
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true
   },
-  "include": ["src", "test", "*"],
-  "exclude": ["src/service-worker"]
+  "include": ["src", "test", "e2e", "*"],
+  "exclude": ["src/service-worker", "node_modules", ".svelte-kit", "build", "test-results", "playwright-report"]
 }

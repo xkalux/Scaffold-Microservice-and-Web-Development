@@ -2,7 +2,7 @@
 
 ## Instructor-authorized verification continuation (2026-10-09, Asia/Bangkok)
 
-For this continuation task, also read `TESTING-HANDOFF.md` and `docs/verification-prompts.md`. The instructor explicitly authorized draft publication, portable verification tooling, shared handoff updates and the VS Code how-to. This authority does not approve untested lessons or dependency changes. Shared `scripts/`, `verification/` and the handoff documents are instructor-owned. Perform package source work as separate scoped Microservices and Web tasks.
+When continuing verification work, read `docs/handoff.md` and `docs/verification-prompts.md`; the current checkpoint there supersedes archived handoffs. The instructor explicitly authorized draft publication, portable verification tooling, shared handoff updates and the VS Code how-to. This authority does not approve untested lessons or dependency changes. Shared `scripts/`, `verification/` and handoff documents are instructor-owned. Perform package source work as separate scoped Microservices and Web tasks.
 
 The portable ZIP places the 30 Thai student lessons under root `Contents/`; the original Drive project places them beside `Scaffold/`. Tools must support both layouts. Course source snapshots under `course-sources/` and the original three Drive files remain read-only. Do not add nested agent instructions, a root manifest, or another lockfile.
 
@@ -10,15 +10,23 @@ Read current lesson case/checklist hashes and actual evidence before claiming a 
 
 ## Start here
 
-Read `docs/index.md`, then open only the documents needed for the task. `docs/codemap.md` maps paths to owners and checks. Keep shared developer documentation in English; student-facing weekly lessons in `../Contents/` are written in Thai.
+Read `docs/index.md` first. Treat it as the entry point and active-document catalog, then open only the documents needed for the task. Use `docs/codemap.md` to choose paths, owners and checks. Keep shared developer documentation in English. Student-facing weekly lessons are in Thai under `Contents/` in the portable ZIP layout or `../Contents/` in the original Drive layout.
+
+## Documentation organization
+
+- Keep shared project guidance in `docs/` and course-specific guidance in `docs/microservices/` or `docs/web/`, following the ownership and purpose listed in `docs/index.md` and `docs/codemap.md`. Keep student lessons in the course `Contents/` location for the active layout; do not duplicate them in `docs/`.
+- Put each active topic in its canonical document and link to it instead of maintaining duplicate instructions. When adding, moving or renaming active documentation, update `docs/index.md` and `docs/codemap.md` when their catalog, ownership or path/check information changes.
+- Keep `docs/archive/` for detailed records of completed Change Requests and superseded research or decisions. Keep active contracts, setup guidance and unresolved issues in the active documentation. Treat archived material as historical reference, not current policy.
+- Track cross-scope requests in `docs/change-requests/index.md`. Keep active request details, scope, acceptance criteria, dependencies and latest verification available. On completion, keep the index entry concise and move detailed discussion to `docs/archive/`, preserving the request ID and links in both directions.
 
 ## Course ownership and scope
 
-- `microservices/` is owned by the Microservices Architecture Development course. Do not edit `web/` while working on a Microservices task.
-- `web/` is owned by the Web Development course. Do not edit `microservices/` while working on a Web task.
+- This single root `AGENTS.md` and the relevant shared documents in `docs/` provide common project guidance for both courses. Shared guidance does not merge package ownership or authorize changes to the other course's source.
+- A Microservices feature or bug task may change source only in `microservices/`; a Web task may change source only in `web/`. Do not edit the other package or make incidental cross-package changes.
+- Read shared documents as needed. Edit course-owned docs only when relevant to the requested feature; edit instructor-owned shared docs only when specifically in scope and authorized by their owner. If completing a task depends on a change in the other package, describe that dependency and leave the other package unchanged unless the user requests a cross-course task.
 - `docs/contracts/` is owned by Microservices for the current API contract. Web may review it and maintain consumer notes in `docs/web/`; Web requests contract changes through a Change Request and must not edit the contract directly.
 - `docs/microservices/` is owned by Microservices; `docs/web/` is owned by Web.
-- `docs/index.md`, `docs/codemap.md`, `docs/toolchain.md`, `docs/ai-skills.md`, and the shared handoff/index structure are instructor-owned.
+- `docs/index.md`, `docs/codemap.md`, `docs/toolchain.md`, `docs/ai-skills.md`, `docs/testing.md`, `docs/handoff.md`, `docs/change-requests/index.md`, `docs/archive/` policy, and shared verification handoffs are instructor-owned.
 - There is one root `AGENTS.md`; do not add nested `AGENTS.md` files. Respect the ownership table even when a requested task spans both courses; report cross-scope work for separate handling.
 
 ## Package manager and version policy
@@ -30,11 +38,19 @@ Read `docs/index.md`, then open only the documents needed for the task. `docs/co
 
 ## Required implementation practices
 
-- Both packages use ESLint flat config. Run the scoped `bun run lint`, then the relevant type check and tests. Web changes also require a successful build.
+- Both packages use ESLint flat config. After the test-first cycle below, run scoped lint, type checks and relevant tests. Web changes also require a successful build and Playwright E2E checks for affected browser flows. Follow `docs/testing.md` for commands and completion gates.
 - Microservices uses Elysia TypeBox `t` schemas at API input/output boundaries and Drizzle ORM with `drizzle-orm/bun-sqlite` over Bun's `bun:sqlite` driver. Each service owns its schema, migrations, database file, and seed data.
 - Authentication context is request-scoped and created with Elysia `derive()`. `derive()` runs before route validation: never treat `body`, `query`, or `params` as validated there. Validate route inputs first, then enforce authentication, role, and ownership checks before any handler with side effects. Do not trust user IDs or roles supplied by a client.
 - Web uses SvelteKit and Tailwind CSS. Follow Svelte 5 runes and current SvelteKit guidance; the SvelteKit 3 setup configures the framework through the Vite plugin and uses `#lib` if an app-library alias is needed.
 - Web consumes the accepted API contract or an explicit mock/fixture. It never imports Microservices database code or edits that package.
+
+## Business logic: tests before implementation
+
+- Before adding or changing business logic in either package, write a meaningful automated test for the intended rule and run it against the unchanged implementation. Confirm it fails because the required behavior is missing or incorrect (Red), implement the smallest correct change (Green), then refactor while keeping tests passing. This also applies to bug fixes and changes to existing rules.
+- Cover business decisions such as calculations, eligibility, permissions, ownership and state transitions with focused unit tests; add integration tests for boundaries and side effects where needed. For a bug, first reproduce the defect with a failing regression test. Test observable outcomes, including applicable boundary and rejection cases.
+- For behavior-preserving refactors of existing business logic, first add or confirm passing characterization tests, then refactor. Any changed rule still requires a failing test first. Documentation and presentation-only changes do not require invented business tests.
+- Web features that add or change a user journey must also have Playwright E2E coverage. Write the new or updated flow test before changing its behavior, confirm the relevant behavioral failure, then make it pass. Keep rule-level tests as well as browser coverage, and use the accepted contract or an explicit Web-owned mock/fixture.
+- Record the test-first sequence, exact commands and actual results. Missing tools, setup errors, skipped tests and a green baseline are not evidence of Red/Green. If the required test cannot run, stop the affected implementation, record the blocker in `docs/handoff.md` and report it; do not bypass this gate or change the other package.
 
 ## Official AI skills and documentation
 
@@ -43,6 +59,10 @@ Read `docs/ai-skills.md` for official sources, applicability, and current verifi
 ## Review and reporting
 
 - Inspect changed paths before finishing and confirm they stay within the requested ownership scope.
+- Review the test-first evidence, changed-rule coverage and affected Web E2E results against `docs/testing.md`. Fix findings and rerun affected checks until they pass; report any unresolved blocker and keep the affected work incomplete. Preserve failed results instead of weakening assertions or hiding failures with skips/retries.
+- For every code feature or bug fix, review the changed code paths for avoidable time, memory, database and network costs. Check for nested iteration whose cost grows with input size, repeated work that can be shared, and database/API calls made once per item (N+1 patterns); consider batching or joins where appropriate.
+- Check repeated membership lookups: use a `Set` or `Map` instead of repeatedly scanning an array when the collection size and lookup pattern make that more efficient and ordering or duplicate behavior does not require an array. Keep arrays where their ordering, duplicates or small bounded size are useful.
+- Judge complexity against expected input sizes and actual constraints. A nested loop or array lookup is not automatically a defect; report concrete likely costs, and avoid adding complexity for speculative gains. Fix in-scope inefficiencies; if a fix would cross package ownership, report the dependency without changing the other package.
 - Report the exact commands run and actual results. Never claim a check, skill, dependency resolution, or runtime test passed unless it was executed successfully.
 - If an official behavior is unclear, a required skill/runtime is unavailable, or a dependency has a breaking change/security issue affecting the work, stop only the affected change and ask the instructor. Preserve a checkpoint in `docs/handoff.md`.
-- Keep completed Change Requests concise in `docs/change-requests/index.md`; move detailed closed records to `docs/archive/` while preserving IDs and links.
+- Follow the documentation and Change Request storage rules above. Keep completed Change Requests concise in `docs/change-requests/index.md`; move detailed closed records to `docs/archive/` while preserving IDs and links in both directions.

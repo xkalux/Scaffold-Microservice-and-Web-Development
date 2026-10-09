@@ -26,6 +26,7 @@
 | `eslint-plugin-svelte` | 3.23.0 | 3.23.0 | [Svelte ESLint plugin](https://www.npmjs.com/package/eslint-plugin-svelte) |
 | `@types/bun` | 1.4.2 | 1.4.2 | [Bun types package](https://www.npmjs.com/package/@types/bun) |
 | `svelte-check` | 4.7.6 | 4.7.6 | [svelte-check package](https://www.npmjs.com/package/svelte-check) |
+| `@playwright/test` (Web only) | 1.64.0 | 1.64.0 (checked 2026-10-09) | [Package metadata](https://registry.npmjs.org/@playwright/test/1.64.0); clean frozen install and 3 Chromium E2E tests passed with portable Linux libraries; see `docs/handoff.md` |
 | Svelte documentation/autofixer CLI | `@sveltejs/mcp` 0.1.26 via `bunx` | 0.1.26 | [Svelte AI tools releases](https://github.com/sveltejs/ai-tools/releases); the exact commands resolve the package but its docs/autofixer request is blocked by runtime DNS to `svelte.dev` (see handoff) |
 
 ## Compatibility notes
@@ -37,5 +38,7 @@
 - Fresh frozen-lockfile installs passed with `bun install --frozen-lockfile` in each package. Microservices `bun run check` passed (lint, typecheck, 1 test); Drizzle generation/migration/seed passed on a fresh temporary database. Web `bun run check` passed (lint, Svelte check with 0 errors and 0 warnings, production build). See `docs/handoff.md` for complete commands and the separate AI-skill tool limitation.
 
 ## Update policy
+
+The instructor requested Playwright E2E setup for Web on 2026-10-09. Add only exact `@playwright/test@1.64.0` to Web, preserving existing dependency pins and using its Bun-generated lockfile. The package declares Node >=20; this environment has Node 24.12.0. Use Bun 1.4.2 for package commands and install the matching Chromium build with the local Playwright CLI. See [testing.md](testing.md) for the workflow and [handoff.md](handoff.md) for actual results. This authorization does not change Microservices dependencies.
 
 Keep stable versions pinned for a teaching term. Before changing one, compare the current release with this record, review official breaking changes/security notes, test the clean install and all relevant checks, then update both the package manifest/lockfile and this document in an instructor-reviewed change.

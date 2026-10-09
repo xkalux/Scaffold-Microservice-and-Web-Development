@@ -1,6 +1,10 @@
 # Official AI skills and practices
 
-## Current continuation status (2026-10-09, Asia/Bangkok)
+## Local Web testing update (2026-10-09, Asia/Bangkok)
+
+This local checkout has no `.agents/skills/` directory: attempts to read `svelte-code-writer` and `svelte-core-bestpractices` returned file-not-found. The local framework skill and documentation/autofixer workflow is NOT_RUN. The Web testing task changed the Playwright harness and documentation, with no Svelte component/module edits. Type checks, a build and starter E2E tests are recorded in [handoff.md](handoff.md); they do not prove the skill workflow ran. The records below describe earlier environments and do not establish skill availability in this checkout.
+
+## Hosted continuation record (2026-10-09, Asia/Bangkok)
 
 The dated 2026-10-07 records below are historical scaffold evidence. Current lesson runtime and local agent-discovery checks are NOT_RUN in this hosted continuation because Bun is unavailable. The bundle retains the existing skill files and `skills-lock.json` without reinstalling or upgrading them. Codex project discovery uses `.agents/skills/`; verify actual loading in the local extension and record the paths read. Other agents must load the applicable skills explicitly if their discovery differs.
 

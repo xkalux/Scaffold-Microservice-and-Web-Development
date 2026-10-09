@@ -1,0 +1,123 @@
+{
+  "scope": "Web starter E2E setup only; no lesson approval or business-logic Red/Green claim",
+  "checked_at_utc": "2026-10-09T00:56:45.631861+00:00",
+  "versions": {
+    "bun": "1.4.2 (portable)",
+    "default_bun": "1.4.0",
+    "node": "24.12.0",
+    "playwright": "1.64.0",
+    "chromium_revision": "1248",
+    "chromium": "156.0.8078.4"
+  },
+  "cwd": "web",
+  "command": "env PATH=\"/tmp/week6-bun142/bun-linux-x64:$PATH\" LD_LIBRARY_PATH=/tmp/scaffold-testing-4m9j9vik/chromium-libs/usr/lib/x86_64-linux-gnu bun run check",
+  "exit_code": 0,
+  "e2e": {
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "retries": 0
+  },
+  "ports": {
+    "e2e": 4173,
+    "vite_development_default": 5173,
+    "strict_port": true,
+    "reuse_existing_server": false
+  },
+  "limitations": [
+    "Portable Linux libraries required on this host; global system packages were not installed.",
+    "Sandbox localhost EPERM required scoped execution outside sandbox.",
+    "Official Svelte skills absent; no Svelte source changed and docs/autofixer workflow not run.",
+    "Microservices runtime checks were not run.",
+    "No separate Web business unit suite exists yet; changed business rules require focused unit/integration tests first."
+  ],
+  "prior_attempts": [
+    {
+      "command": "bun install --frozen-lockfile",
+      "exit_code": 1,
+      "reason": "Sandbox DNSResolveFailed; succeeded on authorized network retry."
+    },
+    {
+      "command": "bun run test:e2e",
+      "exit_code": 1,
+      "reason": "Sandbox preview bind EPERM on 127.0.0.1:4173."
+    },
+    {
+      "command": "bun run check",
+      "exit_code": 130,
+      "reason": "Interrupted while initial HTTP probe stalled before server startup."
+    },
+    {
+      "command": "DEBUG=pw:webserver timeout 60s bunx --no-install playwright test",
+      "exit_code": 124,
+      "reason": "Diagnostic confirmed the initial HTTP probe stalled; fixed readiness to use Vite stdout."
+    },
+    {
+      "command": "bun run check",
+      "exit_code": 1,
+      "reason": "Three browser launches failed because Linux libraries were missing.",
+      "log": "failed-browser-libraries.log"
+    },
+    {
+      "command": "bun run dev --host 127.0.0.1 --strictPort",
+      "cwd": "isolated clean Web fixture",
+      "exit_code": 1,
+      "reason": "Development port 5173 already occupied; the other process was left running."
+    }
+  ],
+  "review": [
+    "Test-first rules shared by both packages, with scoped implementation and honest Red/Green evidence.",
+    "Playwright specs included in TypeScript checks; generated reports excluded from lint and Git.",
+    "Strict preview port and bounded stdout readiness; browser assertions cover unchanged starter journeys.",
+    "Existing direct pins preserved; clean frozen Web install succeeded; Microservices manifests and lockfile unchanged."
+  ],
+  "source_sha256": {
+    "web/package.json": "60d8a56c99c4bf61e51f86a861bf899dbf3d3284648bbb8cd6cca903899d3ffb",
+    "web/bun.lock": "3914acd5737454ba813f9f6f4c09346bc508e2d6bf4b198e906e48486de4cb73",
+    "web/playwright.config.ts": "1bdf29809ea91945063e82cd9a8be4d6c4ec210fc261495592e5b1a2868744e8",
+    "web/e2e/starter.spec.ts": "6e95d522bbccf0cb64d4bde61b830c9d41e40b08f41a360c930b4175c3c9aa92",
+    "web/eslint.config.mjs": "4aa8e4272b9d98d8a3f355dd8ef2394a839e8bed86efffbdb2d6db6f62bd54d1",
+    "web/tsconfig.json": "53d79844eaba507dd20ffd369bb798196a6b0adb8b775f5fa55ee7e160870ae7"
+  },
+  "artifact_sha256": {
+    "failed-browser-libraries.log": "24a0ef5ffd6d90446153319a6141b3ff8937e58626b470e61fbef6c4ddbab277",
+    "passed-web-check.log": "375b93b6ded047715bbf7016bc9dd0a529df741691a69a3bf80851189dbdd0a1",
+    "browser-launch-failures/.last-run.json": "5cfcbcb84a0ddefbd74daaf6cb90664e600c8ab890a1eb3838f99874ab90f2a4",
+    "browser-launch-failures/starter-starts-a-fresh-sample-cart-after-reloading-chromium/error-context.md": "2ca38cafb56fe9e85bf7e86fcd6cd9d16507d533c72842f8cfb879ae2c27a2f0",
+    "browser-launch-failures/starter-starts-a-fresh-sample-cart-after-reloading-chromium/trace.zip": "dcf9804a3e869a89e538ee284d4d9e253aa87527bb8a47d1a1fa68ecc822cd18",
+    "browser-launch-failures/starter-increments-the-sample-cart-for-each-click-chromium/error-context.md": "eda8d07d57730836a8cdc052702ac6c424773ea291894beda56b2cefd6998497",
+    "browser-launch-failures/starter-increments-the-sample-cart-for-each-click-chromium/trace.zip": "8eb657e7d4335ea480bbbb13c8264688c3b67e62fdf01133c227eb2afe452691",
+    "browser-launch-failures/starter-shows-the-sample-catalog-and-navigates-to-it-chromium/error-context.md": "506b3235d2c400611fbe02d7c5c305b8d24115ce780af3b999ddc35dd0f0a08e",
+    "browser-launch-failures/starter-shows-the-sample-catalog-and-navigates-to-it-chromium/trace.zip": "ccd10a222e5b188a44d5be758208eaf27e2561ff1b5ce8987653fb954d20f5c3"
+  },
+  "post_test_review": {
+    "checked_at_utc": "2026-10-09T01:04:29.389525+00:00",
+    "commands": [
+      {
+        "command": "env PATH=\"/tmp/week6-bun142/bun-linux-x64:$PATH\" bun run typecheck",
+        "cwd": "web",
+        "exit_code": 0,
+        "result": "svelte-check found 0 errors and 0 warnings"
+      },
+      {
+        "command": "python3 json.load(web/tsconfig.json)",
+        "exit_code": 0,
+        "result": "valid JSON"
+      },
+      {
+        "command": "git check-ignore -q --no-index over 18 generated/secret paths plus 2 env examples",
+        "exit_code": 0,
+        "result": "18 ignored; 2 example files visible"
+      },
+      {
+        "command": "git diff --check",
+        "exit_code": 0
+      }
+    ],
+    "source_sha256": {
+      ".gitignore": "2aa2fa316721511812acb9fb3035648f2940ac9db7368048b2a5f815433d4f7e",
+      "web/.gitignore": "154ea6a174b483801b7f2e5449b6107faebaf423110e348858bccbd1b27d5ba1",
+      "web/tsconfig.json": "53d79844eaba507dd20ffd369bb798196a6b0adb8b775f5fa55ee7e160870ae7"
+    }
+  }
+}

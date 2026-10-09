@@ -4,7 +4,7 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["node_modules/**", ".svelte-kit/**", "build/**"],
+    ignores: ["node_modules/**", ".svelte-kit/**", "build/**", "test-results/**", "playwright-report/**"],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
