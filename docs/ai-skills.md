@@ -2,7 +2,7 @@
 
 ## Local Web testing update (2026-10-09, Asia/Bangkok)
 
-This local checkout has no `.agents/skills/` directory: attempts to read `svelte-code-writer` and `svelte-core-bestpractices` returned file-not-found. The local framework skill and documentation/autofixer workflow is NOT_RUN. The Web testing task changed the Playwright harness and documentation, with no Svelte component/module edits. Type checks, a build and starter E2E tests are recorded in [handoff.md](handoff.md); they do not prove the skill workflow ran. The records below describe earlier environments and do not establish skill availability in this checkout.
+This repository now contains the project-local Elysia and Svelte skills under `.agents/skills/` (66 files), copied from the Drive verification scaffold. Their source revisions and copied-content hashes are recorded in `skills-lock.json`. This corrects the earlier file-not-found state. Actual skill discovery in the target Codex/VS Code or Cloud environment and the Svelte documentation/autofixer workflow remain NOT_RUN; file presence alone does not prove discovery or use. The Web testing task changed the Playwright harness and documentation, with no Svelte component/module edits. Type checks, a build and starter E2E tests are recorded in [handoff.md](handoff.md); they do not prove the skill workflow ran.
 
 ## Hosted continuation record (2026-10-09, Asia/Bangkok)
 
