@@ -1,16 +1,14 @@
 # Shared agent instructions
 
-## Instructor-authorized verification continuation (2026-10-09, Asia/Bangkok)
+## Session handoff
 
-When continuing verification work, read `docs/handoff.md` and `docs/verification-prompts.md`; the current checkpoint there supersedes archived handoffs. The instructor explicitly authorized draft publication, portable verification tooling, shared handoff updates and the VS Code how-to. This authority does not approve untested lessons or dependency changes. Shared `scripts/`, `verification/` and handoff documents are instructor-owned. Perform package source work as separate scoped Microservices and Web tasks.
+When a task resumes work from another AI or session, read `docs/index.md` and `docs/handoff.md`. Use the handoff as a concise checkpoint, then open only the canonical documentation and evidence needed for the current task. It does not replace this file, technical source documents, or the user's latest instruction. Recheck relevant results when files or the execution environment have changed.
 
-The portable ZIP places the 30 Thai student lessons under root `Contents/`; the original Drive project places them beside `Scaffold/`. Tools must support both layouts. Course source snapshots under `course-sources/` and the original three Drive files remain read-only. Do not add nested agent instructions, a root manifest, or another lockfile.
-
-Read current lesson case/checklist hashes and actual evidence before claiming a pass. A scaffold baseline is not per-lesson verification. Preserve FAIL/NOT_RUN/SKIPPED records and checkpoint after each pair. The existing clean-install exception applies only to clean install. For another agent runtime, load these instructions and applicable skills explicitly and verify the supported workflow; do not assume Codex discovery rules apply.
+Student lessons are maintained in the project-level Drive `Contents/`, outside this repository. Do not add lesson content, Python verification scripts, or a lesson case ledger unless the instructor asks for them.
 
 ## Start here
 
-Read `docs/index.md` first. Treat it as the entry point and active-document catalog, then open only the documents needed for the task. Use `docs/codemap.md` to choose paths, owners and checks. Keep shared developer documentation in English. Student-facing weekly lessons are in Thai under `Contents/` in the portable ZIP layout or `../Contents/` in the original Drive layout.
+Read `docs/index.md` first. Treat it as the entry point and active-document catalog, then open only the documents needed for the task. For resumed work, follow the session-handoff rule above. Use `docs/codemap.md` to choose paths, owners and checks. Keep shared developer documentation in English. Student-facing weekly lessons are in Thai under `Contents/` in the portable ZIP layout or `../Contents/` in the original Drive layout.
 
 ## Documentation organization
 

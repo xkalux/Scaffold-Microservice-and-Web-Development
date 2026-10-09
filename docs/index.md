@@ -1,16 +1,12 @@
 # Documentation index
 
-## Verification continuation
-
-Read [handoff.md](handoff.md) for the current checkpoint and [verification-prompts.md](verification-prompts.md) to continue with Codex or another agent. User instructions are in [../HOW-TO-CODEX-VSCODE.md](../HOW-TO-CODEX-VSCODE.md). `verification/` and `scripts/` are instructor-owned; read-only source snapshots are in `course-sources/`. The current 30-file draft publication supersedes the historical empty-folder checkpoint. Current runtime checks remain unverified until local evidence is recorded.
-
-Read this index first. Open only the active document needed for the task; archived records are reference-only.
+Read this index first. If resuming work from another AI or session, read [handoff.md](handoff.md) for the concise checkpoint. Then open only the active document needed for the current task; archived records are reference-only. The handoff is a context-transfer note, not a source of technical requirements or test evidence.
 
 | Document | Owner | Status | When to read |
 |---|---|---|---|
 | [codemap.md](codemap.md) | Instructor | Active | Before choosing files or running checks |
 | [toolchain.md](toolchain.md) | Instructor | Active; Web starter checks recorded 2026-10-09, earlier package checks dated 2026-10-07 | Before installing packages or changing versions |
-| [ai-skills.md](ai-skills.md) | Instructor | Active; local framework skills unavailable, workflow NOT_RUN | Before AI-assisted framework work |
+| [ai-skills.md](ai-skills.md) | Instructor | Active; project skills present, local discovery/workflow NOT_RUN | Before AI-assisted framework work |
 | [testing.md](testing.md) | Instructor | Active policy | Before business logic changes, Web E2E work or code review |
 | [handoff.md](handoff.md) | Instructor | Active | When resuming work or recording a blocker |
 | [contracts/](contracts/) | Microservices | Contract not yet frozen | Before connecting Web to a service |
